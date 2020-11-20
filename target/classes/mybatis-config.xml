@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--開啟駝峰命名轉換-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <environments default="dev">
+        <!--開發環境配置-->
+        <environment id="dev">
+            <!--事務管理器採用JDBC-->
+            <transactionManager type="JDBC"/>
+<!--            <dataSource type="POOLED">-->
+            <!-- MyBatis 與 Druid的整合 -->
+            <dataSource type="com.imooc.oa.datasource.DruidDataSourceFactory">
+                <!--JDBC連接屬性-->
+                <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://220.130.207.145:3307/imooc-oa?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Shanghai"/>
+                <property name="username" value="angel"/>
+                <property name="password" value="angel"/>
+                <property name="initialSize" value="10"/>
+                <property name="maxActive" value="20"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mappers/test.xml"/>
+    </mappers>
+</configuration>
