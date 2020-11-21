@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/resources/layui/css/layui.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #F2F2F2;
+    }
+
+    .oa-container {
+      background-color: white;
+      position: absolute;
+      width: 400px;
+      height: 350px;
+      /*margin-left: -200px;*/
+      /*margin-top: -175px;*/
+      transform: translate(-50%, -50%);
+      top: 50%;
+      left: 50%;
+      padding: 20px;
+
+    }
+
+    #username, #password {
+      text-align: center;
+      font-size: 24px;
+    }
+
+  </style>
+</head>
+<body>
+<div class="oa-container">
+  <h1 style="text-align: center;margin-bottom: 20px">幕課網辦公OA系統</h1>
+  <form class="layui-form">
+    <div class="layui-form-item">
+      <input type="text" id="username" lay-verify="required" name="username" placeholder="請輸入用戶名" autocomplete="off" class="layui-input">
+    </div>
+    <div class="layui-form-item ">
+      <input type="text" id="password" lay-verify="required" name="password" placeholder="請輸入密碼" autocomplete="off" class="layui-input">
+    </div>
+    <div class="layui-form-item">
+      <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="login">
+        登入
+      </button>
+    </div>
+
+
+  </form>
+</div>
+
+<script src="/resources/layui/layui.all.js"></script>
+<script>
+  layui.form.on("submit(login)",(formdata) => {
+    layui.$.ajax({
+      url:'/check_login',
+      data:formdata.field,
+      type:"POST",
+      dataType:"json",
+      success:(json) => {
+        console.log(json);
+        if(json.code == "0"){
+          layui.layer.msg("登入成功");
+        }else {
+          layui.layer.msg(json.message);
+        }
+      }
+    })
+    return false; //submit 提交事件返回true則表單提交,false則阻止表單提交
+  })
+</script>
+</body>
+</html>
