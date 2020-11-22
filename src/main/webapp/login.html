@@ -39,10 +39,12 @@
   <h1 style="text-align: center;margin-bottom: 20px">幕課網辦公OA系統</h1>
   <form class="layui-form">
     <div class="layui-form-item">
-      <input type="text" id="username" lay-verify="required" name="username" placeholder="請輸入用戶名" autocomplete="off" class="layui-input">
+      <input type="text" id="username" lay-verify="required" name="username" placeholder="請輸入用戶名" autocomplete="off"
+             class="layui-input">
     </div>
     <div class="layui-form-item ">
-      <input type="text" id="password" lay-verify="required" name="password" placeholder="請輸入密碼" autocomplete="off" class="layui-input">
+      <input type="text" id="password" lay-verify="required" name="password" placeholder="請輸入密碼" autocomplete="off"
+             class="layui-input">
     </div>
     <div class="layui-form-item">
       <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="login">
@@ -56,17 +58,18 @@
 
 <script src="/resources/layui/layui.all.js"></script>
 <script>
-  layui.form.on("submit(login)",(formdata) => {
+  layui.form.on("submit(login)", (formdata) => {
     layui.$.ajax({
-      url:'/check_login',
-      data:formdata.field,
-      type:"POST",
-      dataType:"json",
-      success:(json) => {
+      url: '/check_login',
+      data: formdata.field,
+      type: "POST",
+      dataType: "json",
+      success: (json) => {
         console.log(json);
-        if(json.code == "0"){
-          layui.layer.msg("登入成功");
-        }else {
+        if (json.code == "0") {
+          // layui.layer.msg("登入成功");
+          window.location.href = json.redirect_url;
+        } else {
           layui.layer.msg(json.message);
         }
       }
