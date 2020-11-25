@@ -29,5 +29,7 @@
         <mapper resource="mappers/test.xml"/>
         <mapper resource="mappers/user.xml"/>
         <mapper resource="mappers/rbac.xml"/>
+        <mapper resource="mappers/employee.xml"/>
+        <mapper resource="mappers/department.xml"/>
     </mappers>
 </configuration>

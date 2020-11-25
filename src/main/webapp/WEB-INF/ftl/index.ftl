@@ -22,7 +22,7 @@
                     <span class="layui-icon layui-icon-user" style="font-size: 20px">
                     </span>
                     <!--用户信息-->
-                    姓名[部门-职务]
+                    ${current_employee.name}[${current_department.departmentName}-${current_employee.title}]
                 </a>
             </li>
             <!--注销按钮-->
