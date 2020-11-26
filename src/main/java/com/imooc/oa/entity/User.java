@@ -5,7 +5,7 @@ public class User {
   private String username;
   private String password;
   private Long employeeId;
-
+  private Integer salt;
   public Long getUserId() {
     return userId;
   }
@@ -36,5 +36,13 @@ public class User {
 
   public void setEmployeeId(Long employeeId) {
     this.employeeId = employeeId;
+  }
+
+  public Integer getSalt() {
+    return salt;
+  }
+
+  public void setSalt(Integer salt) {
+    this.salt = salt;
   }
 }

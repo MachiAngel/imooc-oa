@@ -29,10 +29,12 @@ public class IndexServlet extends HttpServlet {
 
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     HttpSession session = request.getSession();
+    //得到當前用戶的登入狀態
     User user = (User) session.getAttribute("login_user");
     Employee employee = employeeService.selectById(user.getEmployeeId());
     Department department = departmentService.selectById(employee.getDepartmentId());
     List<Node> nodeList = userService.selectNodeByUserId(user.getUserId());
+    // 設定index頁面屬性
     request.setAttribute("node_list",nodeList);
     session.setAttribute("current_employee", employee);
     session.setAttribute("current_department", department);

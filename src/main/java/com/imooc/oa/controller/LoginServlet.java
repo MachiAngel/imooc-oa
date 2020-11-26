@@ -36,6 +36,7 @@ public class LoginServlet extends HttpServlet {
       result.put("redirect_url", "/index");
 
     } catch (BussinessException e) {
+      System.out.println("BussinessException");
       logger.error(e.getMessage(),e);
       result.put("code",e.getCode());
       result.put("message",e.getMessage());

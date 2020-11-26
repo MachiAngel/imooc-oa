@@ -5,6 +5,7 @@ import com.imooc.oa.dao.UserDao;
 import com.imooc.oa.entity.Node;
 import com.imooc.oa.entity.User;
 import com.imooc.oa.service.exception.BussinessException;
+import com.imooc.oa.utils.MD5Utils;
 
 import java.util.List;
 
@@ -26,7 +27,9 @@ public class UserService {
     if (user == null) {
       throw new BussinessException("L001", "用戶名不存在");
     }
-    if (!password.equals(user.getPassword())) {
+    String md5 = MD5Utils.md5Digest(password, user.getSalt());
+    if (!md5.equals(user.getPassword())) {
+      System.out.println("有來有來有來有來有來有來有來有來有來有來有來有來有來");
       throw new BussinessException("L002", "密碼錯誤");
     }
     return user;
