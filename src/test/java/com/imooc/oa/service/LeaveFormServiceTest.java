@@ -83,6 +83,22 @@ public class LeaveFormServiceTest {
     System.out.println(savedForm.getFormId());
   }
 
+  @Test
+  public void audit1() {
+    leaveFormService.audit(31l,2l,"approved","祝早日康復");
+  }
 
+  @Test
+  public void audit2() {
+    leaveFormService.audit(32l, 2l, "refused", "工期緊張，請勿拖延");
+  }
+
+  /**
+   * 部門經理請假, 總經理審批通過
+   */
+  @Test
+  public void audit3() {
+    leaveFormService.audit(33l, 1l, "approved", "同意");
+  }
 
 }

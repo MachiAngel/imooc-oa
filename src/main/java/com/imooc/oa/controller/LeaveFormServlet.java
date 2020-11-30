@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet(name = "LeaveFormServlet",urlPatterns = "/leave/*")
@@ -31,6 +32,10 @@ public class LeaveFormServlet extends HttpServlet {
     String methodName = uri.substring(uri.lastIndexOf("/") + 1);
     if (methodName.equals("create")) {
       this.create(request,response);
+    } else if (methodName.equals("list")) {
+      this.getLeaveFormList(request, response);
+    }else if (methodName.equals("audit")) {
+      this.audit(request, response);
     }
   }
 
@@ -71,4 +76,45 @@ public class LeaveFormServlet extends HttpServlet {
 
 
   }
+
+
+  private void getLeaveFormList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    User user = (User) request.getSession().getAttribute("login_user");
+    List<Map> formList = leaveFormService.getLeaveFormList("process", user.getEmployeeId());
+    Map result = new HashMap();
+    result.put("code", "0");
+    result.put("msg", "");
+    result.put("count", formList.size());
+    result.put("data", formList);
+    String jsonString = JSON.toJSONString(result);
+    response.getWriter().println(jsonString);
+
+  }
+
+
+  private void audit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    String formId = request.getParameter("formId");
+    String result = request.getParameter("result");
+    String reason = request.getParameter("reason");
+    User user = (User) request.getSession().getAttribute("login_user");
+    Map mpResult = new HashMap();
+    try {
+      leaveFormService.audit(Long.parseLong(formId), user.getEmployeeId(), result, reason);
+      mpResult.put("code", "0");
+      mpResult.put("message", "success");
+
+    } catch (Exception e) {
+      logger.error("請假單審核失敗", e);
+      mpResult.put("code", e.getClass().getSimpleName());
+      mpResult.put("message", e.getMessage());
+
+    }
+    String json = JSON.toJSONString(mpResult);
+    response.getWriter().println(json);
+
+
+  }
+
 }
